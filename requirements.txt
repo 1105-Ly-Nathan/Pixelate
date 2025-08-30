@@ -1,0 +1,6 @@
+# pip installable libraries required in this project:
+
+pillow
+os
+sys
+prettytable

@@ -15,7 +15,7 @@ Video Demo: [Watch on YouTube](https://youtu.be/OLdn-PvBAec)
 &nbsp;
 
 ![Mosaic](output/mc_mosaic.png)
-*Output of Chewy as Minecraft blocks*
+*Output of Chewy as Minecraft blocks, specified for 32x32*
 
 
 ## Features

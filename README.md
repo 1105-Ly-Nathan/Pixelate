@@ -10,7 +10,10 @@ Video Demo: [Watch on YouTube](https://youtu.be/OLdn-PvBAec)
 
 ## Screenshots
 ![Chewy](images/chewy.png)
+**Input image of my dog Chewy!**
+
 ![Mosaic](output/mc_mosaic.png)
+**Output of Chewy as Minecraft blocks**
 
 
 ## Features

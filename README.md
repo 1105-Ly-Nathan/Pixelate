@@ -8,6 +8,11 @@ I created this tool because I wanted to build my dog Chewy into my Minecraft wor
 Video Demo: [Watch on YouTube](https://youtu.be/OLdn-PvBAec)
 
 
+## Screenshots
+![Chewy](images/chewy.png)
+![Mosaic](output/mc_mosaic.png)
+
+
 ## Features
 - Converts an input image into **Minecraft art mosaics** using real block textures ingame
 
@@ -91,3 +96,9 @@ Output files are saved in `/output`:
 - Add support for non-square images
 - Explore other color spaces like CIEDE2000 for more realistic matching
 - Optimize with NumPy vectorization or KD-Tree nearest-neighbor search
+
+
+# Author
+**Nathan Ly**
+-Github: github.com/nathanjly
+-Email: nathanjly.njl@gmail.com

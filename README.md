@@ -1,20 +1,69 @@
-# Pixelate: Minecraft Image Converter
-## Video Demo URL:https://youtu.be/OLdn-PvBAec
+# Minecraft Image Converter 
+
 ## Description
-This project converts an input image into Minecraft art, assisting players to build the input image in game. The Minecraft "mosaic" is composed of most block textures in the game that most closely matches in color to the original input image. A table of block names and their quantities is printed into the terminal for the player to collect the materials required to build the mosaic. To use, in the terminal run /python pixelate.py image [size]. "Image" is a command-line argument that refers to the image file name, ending in ".png", ".jpg", or ".jpeg". "Size" is an optional argument that refers to the length of the output image in blocks. It is a positive integer up to 128, with the default value being 16; if no size argument is provided, a 16x16 image will be produced.
+Pixelate is a tool to convert any image into Minecraft block mosaics, with a generated list of required blocks for building in-game. This allows the user to "import" their favorite images into Minecraft.
 
-How does it work? The program first processes all the Minecraft block textures that can appear in the final output image. Because the colors of the blocks are often not homogenous, the program finds the average block color by calculating the average RGB values. This information is saved in memory in the form of a dictionary to be accessed later.
+I created this tool because I wanted to build my dog Chewy into my Minecraft world, but I didn't know what blocks to use.
 
-Next, the program converts the input image into a pixelated form, cropped to a square, where each "pixel" will be replaced with the closest Minecraft block in color. To get the pixelated image, the original image is simply resized to be much smaller, then resized up to a predetermined size; in this case, 800 by 800. The pixelated image is iterated through, analyzing the color of each "pixel", and replacing said pixel with the closest Minecraft texture in color. Finally, the output is saved to the "/output" folder.
+Video Demo: [Watch on YouTube](https://youtu.be/OLdn-PvBAec)
 
-How was color closeness determined? From https://en.wikipedia.org/wiki/Color_difference, the Euclidean distance formula was utilized, comparing the RGB pixels of the input image against the average RGB value of each Minecraft texture. While mathematically this model makes sense to find color closeness, human color perception is slightly different, taking into account hue, saturation, and value (HSV). Still, the Euclidean distance is the most computationally simple method for the purpose of this program.
 
-There is a positive linear relationship between the size of the output image and the amount of detail. This is much like how the more pixels there are in an image, the more detailed it is. Despite that, I have decided to limit the maximum size of the output to 128x128. As the output gets bigger and thus more detailed, the Minecraft block textures start to lose detail, to the point where they become unrecognizable. The purpose of this program is to help Minecraft players be able to build the mosaic in game, so block recognition is important. It's also important to note that these mosaics are meant to be viewed from farther away, and in fact are more recognizable that way. The user can zoom out on their output image to better demonstrate this concept.
+## Features
+- Converts an input image into **Minecraft art mosaics** using real block textures ingame
 
-## Files
-The root folder, /pixelate, contains a subfolder called /blocks, a subfolder called /output, and various images that can be converted to Minecraft art by running the Python program, pixelate.py. If there is a specific image the user would like to use, that file must be put into the root folder along with the other test images such as chewy.png.
+- Supports custom dimensions (default 16x16, up to 128x128)  
+- Generates a materials table, allowing the user to collect the required blocks  
+- Outputs both:  
+  - `pixelated.png` → pixelated image of the input image, allowing the user to see the comparison with the final output
+  - `mc_mosaic.png` → final Minecraft mosaic, made out of block textures
 
-The /blocks folder contains all the Minecraft block textures that I deemed "appropriate" to use as a color. In this context, "appropriate" means not having transparency in the texture, such as the glass blocks, and not having so many colors in the texture, such as many of the glazed terracotta blocks, since the average RGB calculation will be misleading.
 
-The /output folder will contain the two files as output from running the program. The "mc_mosaic.png" file is the Minecraft art image, and the "pixelated.png" file is the image in which the Minecraft art is based off of. By looking at them side-by-side, one can observe how the Minecraft blocks try to emulate the colors of the original image along with the limitations from certain RGB colors not having a close enough Minecraft block equivalent.
+## How It Works
+**1. Block Preprocessing**  
+   - Each Minecraft block texture (stored in `/blocks`) is analyzed.  
+   - Average RGB color values are computed for each block (since textures aren’t homogeneous).  
+   - Results are stored in a dictionary for fast lookup.  
 
+**2. Image Pixelation**  
+   - Input image is cropped to a square, then resized to a low dimension (default 16x16).  
+   - This creates a simplified “pixelated” version where each pixel corresponds to one block.  
+
+**3. Block Replacement**  
+   - For each pixel, the closest matching Minecraft block is chosen.  
+   - Euclidean distance in RGB space is used for color matching.  
+   - Note: While more advanced color spaces (HSV, CIEDE2000) could improve results, Euclidean distance was chosen for simplicity and performance.  
+
+**4. Output**  
+   - A final mosaic image is generated.  
+   - A materials usage report is printed to the terminal via `PrettyTable`:
+
++-----------------+----------+
+|   Block Name    | Quantity |
++-----------------+----------+
+| oak_planks      |   124    |
+| sandstone       |    78    |
+| cobblestone     |    56    |
++-----------------+----------+
+
+
+## Design Notes
+- **Maximum size:** 128×128 blocks  
+- Larger mosaics give more detail but cause block textures to lose recognizability.  
+- Since the purpose is to recreate mosaics in-game, block clarity was prioritized.  
+- Viewing distance: Mosaics are best viewed from farther away, just like pixel art.  
+- Block selection: Transparent and overly multicolored textures (e.g., glass, glazed terracotta) were excluded from `/blocks` to avoid misleading averages.  
+
+
+# Technologies
+- **Language**: Python
+- **Libraries**: 
+    - Pillow(PIL) → image processing
+    - PrettyTable → ASCII materials table
+- **Algorithm**: average RGB analysis + nearest-neighbor search
+
+
+# Future Improvements
+- Deploy as web app(Flask + frontend upload form)
+- Add support for non-square images
+- Explore other color spaces like CIEDE2000 for more realistic matching
+- Optimize with NumPy vectorization or KD-Tree nearest-neighbor search

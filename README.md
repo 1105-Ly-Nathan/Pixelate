@@ -37,13 +37,37 @@ Video Demo: [Watch on YouTube](https://youtu.be/OLdn-PvBAec)
    - A final mosaic image is generated.  
    - A materials usage report is printed to the terminal via `PrettyTable`:
 
-+-----------------+----------+
-|   Block Name    | Quantity |
-+-----------------+----------+
-| oak_planks      |   124    |
-| sandstone       |    78    |
-| cobblestone     |    56    |
-+-----------------+----------+
+
+## 📦 Installation & Setup
+### Requirements
+- Python 3.10 or higher
+- Dependencies listed in "requirements.txt"
+
+**1.** Clone the repository:  
+   ```bash
+   git clone https://github.com/yourusername/minecraft-image-converter.git
+   cd minecraft-image-converter
+   ```
+**2.** Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Usage
+**1.** Put the image you want to convert into the folder `/blocks`
+**2.** Run from terminal:
+```bash
+   python pixelate.py images/image.png [size]
+```
+- `image.png` → input image (.jpg, .jpeg, or .png). Make sure it is in the images folder.
+- `[size]` → optional mosaic dimension (1-128, default = 16)
+**Example:**
+```bash
+python pixelate.py images/chewy.png 64
+```
+Output files are saved in `/output`:
+- `pixelated.png`
+- `mc_mosaic.png`
 
 
 ## Design Notes

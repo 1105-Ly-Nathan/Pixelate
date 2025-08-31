@@ -1,6 +1,4 @@
 # pip installable libraries required in this project:
 
-pillow
-os
-sys
-prettytable
+Pillow>=10.0.0
+prettytable>=3.0.0
